@@ -1,7 +1,7 @@
 /**
   * Copyright 2019 bejson.com 
   */
-package bean;
+package bean.checkip;
 
 /**
  * Auto-generated: 2019-06-06 23:42:7

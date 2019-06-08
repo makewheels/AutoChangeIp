@@ -1,8 +1,14 @@
 package start;
 
-import bean.CheckIpResult;
+import bean.checkip.CheckIpResult;
 import com.alibaba.fastjson.JSON;
 import util.HttpUtil;
+import util.QcloudCosUtil;
+import util.SsrUtil;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * 全自动检查ip是否被墙，以及谷歌云换ip
@@ -50,17 +56,30 @@ public class Run {
         //检查是否被墙
         boolean canUse = checkIp(oldIp);
         //如果被墙了
-//        if (canUse == false){
-        Runtime runtime = Runtime.getRuntime();
-        //换ip
-        changeIp();
-        //再次查询ip
-        String newIp = getIp();
-        //再次查询是否被墙
-        canUse = checkIp(newIp);
         if (canUse == false) {
-            System.out.println("your father 还是被墙");
-//            }
+            //换ip
+            changeIp();
+            //再次查询ip
+            String newIp = getIp();
+            //再次查询是否被墙
+            if (checkIp(newIp) == false) {
+                System.out.println("your father 还是被墙");
+            }
+            //更新ssr订阅链接
+            String ssrLink = SsrUtil.getSsrLink(newIp, "12000", "1wga0gar564gw00w4e",
+                    "台湾", "谷歌云");
+            //写到本地文件
+            File file = new File("ssrsub");
+            try {
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                fileOutputStream.write(ssrLink.getBytes());
+                fileOutputStream.flush();
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //上传到腾讯云对象存储
+            QcloudCosUtil.saveToQcloud(file, "/subscription/wR2ez5pc4ISN4BIJqczWhvSMIfngJUACHr");
         }
     }
 }

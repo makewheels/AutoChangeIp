@@ -1,7 +1,7 @@
 /**
   * Copyright 2019 bejson.com 
   */
-package bean;
+package bean.checkip;
 
 /**
  * Auto-generated: 2019-06-06 23:42:7
@@ -9,7 +9,7 @@ package bean;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class Tcp {
+public class Icmp {
 
     private boolean accepted;
     private boolean alive;

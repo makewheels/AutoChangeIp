@@ -43,7 +43,6 @@ public class QcloudCosUtil {
 	 * @return
 	 */
 	public static String saveToQcloud(InputStream inputStream, String key, long contentLength) {
-		String bucketName = "weather-1253319037";
 		ObjectMetadata objectMetadata = new ObjectMetadata();
 		objectMetadata.setContentLength(contentLength);
 		cosClient.putObject(bucketName, key, inputStream, objectMetadata);
